@@ -3,32 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zahnarztpraxis Dr. Mustermann</title>
-  <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
+  <title>Zahnarztpraxis Landing Page</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="header">
-    <div class="logo">🦷 Dr. Mustermann</div>
-    <button class="nav-toggle" onclick="toggleNav()">☰</button>
-    <nav id="nav" class="nav">
-      <a href="index.html">Start</a>
-      <a href="leistungen.html">Leistungen</a>
-      <a href="team.html">Team</a>
-      <a href="kontakt.html">Kontakt</a>
-    </nav>
-  </header>
+<main>
+  <!-- HERO-BEREICH -->
+  <section id="hero" class="hero">
+    <div class="hero-text">
+      <h1>Ihr Lächeln in <span>besten Händen</span></h1>
+      <button>Jetzt Termin buchen</button>
+    </div>
+    <div class="hero-image">
+      <div class="slider" id="slider">
+        <div class="slide active" style="background-image:url('https://via.placeholder.com/800x500/4ABFA1/ffffff?text=Bild+1');"></div>
+        <div class="slide"       style="background-image:url('https://via.placeholder.com/800x500/4ABFA1/ffffff?text=Bild+2');"></div>
+        <div class="slide"       style="background-image:url('https://via.placeholder.com/800x500/4ABFA1/ffffff?text=Bild+3');"></div>
+        <button class="slider-arrow prev" onclick="prevSlide()">‹</button>
+        <button class="slider-arrow next" onclick="nextSlide()">›</button>
+      </div>
+    </div>
+  </section>
 
-  <main>
-    <section class="hero">
-      <h1>Willkommen in Ihrer Zahnarztpraxis in München</h1>
-      <p>Moderne Zahnmedizin. Menschlich. Transparent.</p>
-      <a class="cta-button" href="kontakt.html">Jetzt Termin vereinbaren</a>
-    </section>
-  </main>
+  <div class="section-divider"></div>
 
-  <footer class="footer">
-    <p>&copy; 2025 Zahnarztpraxis Dr. Mustermann · Impressum · Datenschutz</p>
-  </footer>
+  <!-- LEISTUNGSÜBERSICHT -->
+  <section id="leistungen" class="services-grid">
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Prophylaxe Icon"></div>
+      <h3>Prophylaxe</h3>
+      <p>Professionelle Zahnreinigung<br>Kinderprophylaxe<br>Aufhellung Ihrer Zähne (Bleaching)<br>Individuell empfohlene Mundhygieneartikel (bei uns erhältlich)</p>
+    </div>
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Zahnerhaltung Icon"></div>
+      <h3>Zahnerhaltung</h3>
+      <p>Hochwertige Kunststofffüllungen<br>Inlay-, Onlay-, Teilkronenversorgung<br>Veneers</p>
+    </div>
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Kinderzahnheilkunde Icon"></div>
+      <h3>Kinderzahnheilkunde</h3>
+      <p>Kindgerechte Behandlungen<br>Angst- und spielerisches Vorgehen</p>
+    </div>
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Prothetik Icon"></div>
+      <h3>Prothetik</h3>
+      <p>Kronen- und Brückentechnik<br>Teil- und Totalprothesen<br>Doppelkronen</p>
+    </div>
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Implantatversorgung Icon"></div>
+      <h3>Implantatversorgung</h3>
+      <p>Implantatberatung und -planung<br>Implantation und Suprakonstruktion</p>
+    </div>
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Vollkeramik Icon"></div>
+      <h3>Vollkeramik</h3>
+      <p>Metallfreier Zahnersatz<br>Ästhetisch und biokompatibel</p>
+    </div>
+    <div class="service-box">
+      <div class="icon"><img src="https://via.placeholder.com/64" alt="Schienentherapie Icon"></div>
+      <h3>Schienentherapie</h3>
+      <p>Knirscherschienen<br>Relaxationsschienen (Kiefergelenkproblematik)</p>
+    </div>
+  </section>
+</main>
+
+<script>
+  let idx = 0;
+  const slides = document.querySelectorAll('#slider .slide');
+  function showSlide(i) {
+    slides.forEach((s, j) => s.classList.toggle('active', j === i));
+  }
+  function nextSlide() {
+    idx = (idx + 1) % slides.length;
+    showSlide(idx);
+  }
+  function prevSlide() {
+    idx = (idx - 1 + slides.length) % slides.length;
+    showSlide(idx);
+  }
+  setInterval(nextSlide, 5000);
+</script>
 </body>
 </html>
