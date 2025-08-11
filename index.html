@@ -10,6 +10,7 @@
       --accent:#0e9a98; /* Akzentfarbe */
       --bg:#ffffff; --text:#0e1b25; --muted:#5b7082; --card:#f7fafb;
       --ring:rgba(14,154,152,.35); --shadow:0 10px 30px rgba(2,20,31,.08); --radius:18px;
+      --nav-h:64px; /* Navigationshöhe */
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -22,9 +23,15 @@
 
     /* Header & Navigation */
     header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(187,231,225,.6);backdrop-filter:saturate(160%) blur(10px);box-shadow:0 4px 20px rgba(2,20,31,.06)}
-    .nav{display:flex;align-items:center;justify-content:flex-start;gap:16px;padding:14px 0}
+    .nav{display:flex;align-items:center;justify-content:flex-start;gap:16px;min-height:var(--nav-h);padding:0}
     .brand{display:flex;align-items:center;gap:12px}
-    .brand-logo{height:42px;width:auto;display:block;border-radius:10px}
+    .brand-logo{height:var(--nav-h);width:auto;display:block;border-radius:0;object-fit:contain}
+    .brand-name{display:flex;flex-direction:column;line-height:1;}
+    .brand-name .bn-line1{font-weight:800;font-size:clamp(16px,1.8vw,20px);letter-spacing:.01em;color:#0f2230}
+    .brand-name .bn-line2{font-weight:700;font-size:clamp(15px,1.7vw,19px);color:#35505f}
+    @media (max-width:640px){.brand-name .bn-line1{font-size:16px}.brand-name .bn-line2{font-size:15px}}
+
+
     .title{font-weight:800}
     header .title{font-size:clamp(18px,2.1vw,26px)}
     .sub{color:var(--muted);font-size:.9rem}
@@ -63,7 +70,7 @@
     .mobile-link{display:flex;align-items:center;gap:10px;padding:12px 0;color:#10202c;border-bottom:1px dashed #eef3f6}
     .mobile-link:last-child{border-bottom:0}
 
-    @media (max-width:980px){.cta{display:none}.brand{margin-right:auto}.links{display:flex;gap:10px;margin-left:0;justify-content:flex-start;min-width:0;overflow:hidden;white-space:nowrap}.hamburger{display:flex;margin-left:auto}}
+    @media (max-width:980px){.cta{display:none}.brand{margin-right:auto}.links{display:flex;gap:10px;margin-left:0;justify-content:flex-start;min-width:0;overflow:hidden;white-space:nowrap}.hamburger{display:flex;margin-left:auto;margin-right:12px;height:calc(var(--nav-h) - 8px);align-self:center}}
 
     /* Hero */
     .hero{padding:48px 0 10px; overflow:hidden}
@@ -141,7 +148,8 @@
       .section-head{flex-direction:column;align-items:flex-start}
       .btn,.btn.outline{width:100%}
     }
-    @media (max-width: 640px){.slider{min-height:260px}
+    @media (max-width: 640px){
+      .slider{min-height:260px}
       .map{height:280px}
       .mobile-link{padding:16px 0}
       .card{padding:16px; overflow:visible; word-break:break-word; overflow-wrap:anywhere}
@@ -165,9 +173,11 @@
   <header>
     <div class="container nav" role="navigation" aria-label="Hauptnavigation">
       <div class="brand">
-        <img class="brand-logo" src="data:image/png;base64,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" alt="Praxislogo" />
-        <div>
-          <div class="title">Zahnarztpraxis am Park</div></div>
+        <img class="brand-logo" src="logoGL.png" alt="Praxislogo" />
+        <div class="brand-name" aria-label="Zahnarztpraxis am Park">
+          <span class="bn-line1">Gennadij Lindt</span>
+          <span class="bn-line2">Zahnarzt</span>
+        </div>
       </div>
 
       <nav class="links" aria-label="Menü">
@@ -212,14 +222,13 @@
         <span class="eyebrow">Willkommen</span>
         <h1>Moderne Zahnmedizin mit Zeit für Sie</h1>
         <p class="lead">Wir verbinden höchste fachliche Qualität mit einer freundlichen Atmosphäre. Von Prophylaxe über Zahnerhalt bis zu Implantaten – für Ihr natürliches Lächeln.</p>
-        
       </div>
       <div>
         <!-- Bild-Slider -->
         <section class="slider" aria-roledescription="carousel" aria-label="Praxis-Impressionen">
           <div id="slides" class="slides">
             <article class="slide" aria-label="Prophylaxe">
-              <img loading="lazy" decoding="async" src="https://picsum.photos/seed/dental-hygiene/1200/800" alt="Helles Prophylaxe-Behandlungszimmer" />
+              <img loading="lazy" decoding="async" src="Zahnbürsteplain.jpg" alt="Helles Prophylaxe-Behandlungszimmer" />
               <div class="slide-content">
                 <span class="badge">Prophylaxe</span>
                 <h3>Vorbeugen ist besser als heilen</h3>
@@ -227,7 +236,7 @@
               </div>
             </article>
             <article class="slide" aria-label="Implantate">
-              <img loading="lazy" decoding="async" src="https://picsum.photos/seed/implant/1200/800" alt="Beratung zu Zahnimplantaten" />
+              <img loading="lazy" decoding="async" src="implant1.jpg" alt="Beratung zu Zahnimplantaten" />
               <div class="slide-content">
                 <span class="badge">Implantologie</span>
                 <h3>Fester Biss mit Straumann®</h3>
@@ -235,7 +244,7 @@
               </div>
             </article>
             <article class="slide" aria-label="Ästhetik">
-              <img loading="lazy" decoding="async" src="https://picsum.photos/seed/aesthetics/1200/800" alt="Ästhetische Zahnbehandlung" />
+              <img loading="lazy" decoding="async" src="zahnbeschichtung.jpg" alt="Ästhetische Zahnbehandlung" />
               <div class="slide-content">
                 <span class="badge">Ästhetik</span>
                 <h3>Aufhellung & Veneers</h3>
@@ -245,7 +254,6 @@
           </div>
           <button class="arrow prev" id="prevSlide" aria-label="Vorheriges Bild">‹</button>
           <button class="arrow next" id="nextSlide" aria-label="Nächstes Bild">›</button>
-          
         </section>
       </div>
     </div>
@@ -462,10 +470,7 @@
   <footer style="padding:40px 0 60px;color:#35505f;border-top:1px solid #eef3f6">
     <div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
       <div class="brand" style="display:flex;gap:12px;align-items:center">
-        <img class="brand-logo" src="data:image/png;base64,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" alt="Praxislogo" />
-        <div>
-          <div class="title">Zahnarztpraxis am Park</div>
-        </div>
+        <img class="brand-logo" src="bf4c0fe8-355c-4739-8a1b-e7bfac159c41.png" alt="Praxislogo mit Namen" />
       </div>
       <div>
         <div class="footer-nav" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end">
@@ -579,7 +584,7 @@
       // Mobile/Tablet: prüfen, ob Links in verfügbare Breite passen
       linksEl.classList.remove('collapsed');
       const navW = navEl.clientWidth;
-      const brandW = brandEl?.getBoundingClientRect().width || 0;
+      const brandW = brandEl ? brandEl.getBoundingClientRect().width : 0;
       const ctaVisible = window.getComputedStyle(ctaEl).display !== 'none';
       const ctaW = ctaVisible ? ctaEl.getBoundingClientRect().width : 0;
       const burgerW = burgerVisible ? burgerEl.getBoundingClientRect().width : 0;
@@ -625,9 +630,32 @@
       }
     }
 
-    window.addEventListener('load', ()=>{ computeCallbarThreshold(); checkCallbar(); });
-    window.addEventListener('resize', ()=>{ computeCallbarThreshold(); checkCallbar(); });
-    window.addEventListener('scroll', checkCallbar, {passive:true});
+    window.addEventListener('load', ()=>{
+      // Slider tests
+      assert(document.querySelectorAll('.slide').length === 3, 'Slider has 3 slides');
+      assert(getComputedStyle(document.querySelector('.slide')).backgroundSize === 'cover', 'Slides use background-size: cover');
+      const before = getComputedStyle(slidesEl).transform;
+      prev(); // wrap to last
+      const after = getComputedStyle(slidesEl).transform;
+      assert(before !== after, 'Track transform updates on navigation');
+
+      // Nav collapse test
+      try { fitNavLinks(); assert(true, 'fitNavLinks executed'); } catch(e){ assert(false, 'fitNavLinks threw: ' + e.message); }
+
+      // Mobile menu toggle state
+      openMenu();
+      assert(mobilePanel.classList.contains('open') === true, 'Mobile menu opens');
+      closeMenu();
+      assert(mobilePanel.classList.contains('open') === false, 'Mobile menu closes');
+
+      // Header spacing variable set
+      assert(getComputedStyle(document.documentElement).getPropertyValue('--header-h').trim().length > 0, 'Header height CSS var set');
+
+      // Brand name present and 2 lines
+      const bn = document.querySelector('.brand-name');
+      assert(!!bn, 'Brand name exists');
+      assert(bn && bn.children.length === 2, 'Brand name shows 2 lines');
+    });
   </script>
 </body>
 </html>
