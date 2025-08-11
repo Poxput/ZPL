@@ -75,11 +75,13 @@
     .lead{color:var(--muted);font-size:1.05rem}
 
     /* Slider mit Bildern */
-    .slider{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);aspect-ratio:16/10;min-height:380px;max-height:72vh;background:#fff}
-    .slides{display:flex;height:100%;width:100%;gap:0;transition:transform .6s ease;will-change:transform}
-    .slide{flex:0 0 100%;position:relative;height:100%;display:flex;align-items:flex-end;overflow:hidden}
-    .slide img{position:absolute;inset:-2px;width:calc(100% + 4px);height:calc(100% + 4px);object-fit:cover;object-position:center;backface-visibility:hidden;transform:translateZ(0) scale(1.035);will-change:transform}
-    .slide::before{content:"";position:absolute;inset:-2px;background:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 100%)}
+    .slider{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#fff}
+    .slider::before{content:"";display:block;padding-top:62.5%}
+    @media (max-width:640px){.slider::before{padding-top:68.75%}}
+    .slides{position:absolute;inset:0;display:flex;width:100%;height:100%;gap:0;transition:transform .6s ease;will-change:transform}
+    .slide{flex:0 0 100%;position:relative;height:100%;display:flex;align-items:flex-end;overflow:hidden;background-size:cover;background-position:center;background-repeat:no-repeat}
+    .slide img{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+    .slide::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 100%)}
     .slide-content{position:relative;color:#fff;padding:22px 26px}
     .badge{display:inline-block;background:rgba(255,255,255,.9);color:#0a6f6d;border:1px solid rgba(14,154,152,.3);padding:6px 10px;border-radius:999px;font-weight:700;font-size:.82rem}
     .slide h3{margin:10px 0 6px}
@@ -538,13 +540,21 @@
     let idx = 0; let timer;
     function goTo(i){
       idx = (i + slideEls.length) % slideEls.length;
-      slidesEl.style.transform = `translate3d(-${idx*100}%,0,0)`;
+      const pct = (idx / slideEls.length) * 100; slidesEl.style.transform = `translate3d(-${pct}%,0,0)`;
       resetTimer();
     }
     function next(){ goTo(idx+1); }
     function prev(){ goTo(idx-1); }
     function resetTimer(){ clearInterval(timer); timer = setInterval(next, 5000); }
     resetTimer();
+
+    // Use background-image cover to avoid any gaps
+    slideEls.forEach(slide => {
+      const img = slide.querySelector('img');
+      if(img && img.src){
+        slide.style.backgroundImage = `url('${img.src}')`;
+      }
+    });
 
     // Arrow Buttons
     const prevBtn = document.getElementById('prevSlide');
